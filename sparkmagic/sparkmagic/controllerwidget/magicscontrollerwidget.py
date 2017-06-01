@@ -27,8 +27,14 @@ class MagicsControllerWidget(AbstractMenuWidget):
         kernel_types = ['python', 'python3', 'scala', 'r']
 
         for kernel_type in kernel_types:
-            endpoint_configuration = getattr(conf, 'kernel_%s_credentials' % kernel_type)()
-            default_endpoints.add(Endpoint(is_default=True, **endpoint_configuration))
+            endpoint_credentials = getattr(conf, 'kernel_%s_credentials' % kernel_type)()
+            if "url" not in endpoint_credentials or endpoint_credentials["url"] == "" or "password" not in endpoint_credentials:
+                continue
+            default_endpoints.add(Endpoint(
+                username=endpoint_credentials["username"],
+                password=endpoint_credentials["password"],
+                url=endpoint_credentials["url"],
+                is_default=True))
 
         return default_endpoints
 
