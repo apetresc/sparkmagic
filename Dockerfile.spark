@@ -12,7 +12,7 @@ RUN apt-get update && apt-get install -yq --no-install-recommends --force-yes \
 
 RUN pip install --upgrade setuptools
 
-ENV LIVY_BUILD_VERSION 0.5.0-incubating
+ENV LIVY_BUILD_VERSION 0.6.0-incubating-SNAPSHOT
 ENV LIVY_APP_PATH /apps/livy-$LIVY_BUILD_VERSION-bin
 ENV LIVY_BUILD_PATH /apps/build/livy
 ENV PYSPARK_PYTHON python2.7
@@ -22,7 +22,7 @@ RUN mkdir -p /apps/build && \
     cd /apps/build && \
 	git clone https://github.com/apache/incubator-livy.git livy && \
 	cd $LIVY_BUILD_PATH && \
-  git checkout v$LIVY_BUILD_VERSION && \
+  git checkout 56c76bc2d4563593edce062a563603fe63e5a431 && \
     mvn -DskipTests -Dspark.version=$SPARK_VERSION clean package && \
     ls -al $LIVY_BUILD_PATH && ls -al $LIVY_BUILD_PATH/assembly && ls -al $LIVY_BUILD_PATH/assembly/target && \
     unzip $LIVY_BUILD_PATH/assembly/target/livy-${LIVY_BUILD_VERSION}-bin.zip -d /apps && \

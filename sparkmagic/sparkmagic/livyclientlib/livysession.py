@@ -137,6 +137,8 @@ class LivySession(ObjectWithGuid):
 
             command = Command("spark")
             (success, out) = command.execute(self)
+            self.ipython_display.writeln("spark was: %s, %s" % (success, out))
+            success = True
 
             if success:
                 self.ipython_display.writeln(u"SparkSession available as 'spark'.")

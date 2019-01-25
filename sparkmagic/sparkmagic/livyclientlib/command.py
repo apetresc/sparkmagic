@@ -25,6 +25,7 @@ class Command(ObjectWithGuid):
         return not self == other
 
     def execute(self, session):
+        session.ipython_display.writeln(u"!!!!!!!!!!!ATTEMPTING CODE: %s" % self.code)
         self._spark_events.emit_statement_execution_start_event(session.guid, session.kind, session.id, self.guid)
         statement_id = -1
         try:
